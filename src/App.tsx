@@ -125,7 +125,7 @@ const ThemeButton = styled.button<{ $isActive: boolean }>`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${({ theme }) => theme.shadows.neon};
+    box-shadow: ${({ theme }) => theme.shadows.card};
   }
 
   @media (max-width: 768px) {
@@ -1006,6 +1006,7 @@ const themes: Record<ThemeNames, ThemeType> = {
     shadows: {
       card: '0 0 20px rgba(0, 255, 157, 0.2)',
       button: '0 0 15px rgba(153, 51, 255, 0.3)',
+      neon: '0 0 25px rgba(0, 255, 157, 0.4)'
     },
   },
 };

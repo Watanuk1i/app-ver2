@@ -36,5 +36,6 @@ export interface ThemeType {
   shadows: {
     card: string;
     button: string;
+    neon: string;
   };
 } 
