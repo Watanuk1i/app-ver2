@@ -175,6 +175,26 @@ const Card = styled.div`
     padding: 25px;
     min-height: 320px;
   }
+
+  ${({ theme }) => theme.name === 'hybrid' && `
+    background: ${theme.colors.surface};
+    border: 1px solid ${theme.colors.primary}40;
+    box-shadow: 0 0 20px ${theme.colors.primary}20;
+    
+    &:hover {
+      border-color: ${theme.colors.primary};
+      box-shadow: 0 0 30px ${theme.colors.primary}40;
+      transform: translateY(-2px);
+    }
+    
+    h3 {
+      font-family: ${theme.fonts.primary};
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: ${theme.colors.text};
+      text-shadow: 0 0 10px ${theme.colors.primary}40;
+    }
+  `}
 `;
 
 const ProfileCard = styled(Card)`
@@ -459,14 +479,65 @@ const GradientButton = styled.button`
       font-size: 18px;
     }
   }
+
+  ${({ theme }) => theme.name === 'hybrid' && `
+    background: ${theme.colors.gradient};
+    font-family: ${theme.fonts.primary};
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 1px solid ${theme.colors.primary}40;
+    
+    &:hover {
+      box-shadow: 0 0 20px ${theme.colors.primary}60;
+      transform: translateY(-2px);
+      
+      svg {
+        transform: scale(1.2);
+      }
+    }
+    
+    svg {
+      transition: transform 0.3s ease;
+    }
+  `}
 `;
 
 const CoinsText = styled.div`
-  color: ${({ theme }) => theme.colors.accent};
-  font-size: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ${({ theme }) => theme.fonts.secondary};
   font-weight: bold;
-  margin: 15px 0;
-  text-shadow: 0 0 10px ${({ theme }) => `${theme.colors.accent}50`};
+  font-size: 18px;
+  
+  ${({ theme }) => theme.name === 'hybrid' && `
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    
+    svg {
+      filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+    }
+  `}
+`;
+
+const PriceTag = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  
+  ${({ theme }) => theme.name === 'hybrid' && `
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    font-family: ${theme.fonts.primary};
+    letter-spacing: 1px;
+    
+    svg {
+      color: #ffd700;
+      filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+    }
+  `}
 `;
 
 const ProductCard = styled(Card)`
@@ -661,149 +732,203 @@ const StatusBadge = styled.span<StatusBadgeProps>`
   z-index: 2;
   
   ${({ $type, theme }) => {
-    switch ($type) {
-      case 'active':
-        switch (theme.name) {
-          case 'cyberpunk':
-            return `
-              background: linear-gradient(90deg, #00ff9d, #00ffea);
-              color: #000;
-              box-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
-              border: 1px solid #00ff9d;
-              top: 10px;
-              right: 10px;
-              
-              svg {
-                animation: pulse 2s infinite;
-              }
-            `;
-          case 'gaming':
-            return `
-              background: linear-gradient(90deg, #ff3e3e, #ff9100);
-              color: #fff;
-              padding: 6px 12px;
-              top: 10px;
-              right: 10px;
-              border-radius: 20px;
-              font-weight: bold;
-              overflow: hidden;
-              
-              &::before,
-              &::after {
-                content: '';
-                position: absolute;
-                width: 8px;
-                height: 8px;
-                background: rgba(255, 255, 255, 0.8);
-                border-radius: 50%;
-                animation: float 3s infinite;
-              }
+    if (theme.name === 'hybrid') {
+      switch ($type) {
+        case 'active':
+          return `
+            background: linear-gradient(90deg, ${theme.colors.primary}, ${theme.colors.accent});
+            color: #000;
+            font-family: ${theme.fonts.primary};
+            font-weight: bold;
+            letter-spacing: 1px;
+            border: 1px solid ${theme.colors.primary};
+            box-shadow: 0 0 15px ${theme.colors.primary}50;
+            
+            svg {
+              animation: pulse 2s infinite;
+              filter: drop-shadow(0 0 3px ${theme.colors.primary});
+            }
+          `;
+        case 'live':
+          return `
+            background: #00ff9d;
+            color: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+            top: 10px;
+            right: 10px;
+          `;
+        case 'inStock':
+          return `
+            background: ${theme.colors.primary};
+            color: ${theme.colors.text};
+            box-shadow: 0 0 10px ${theme.colors.primary}50;
+            top: 10px;
+            right: 10px;
+          `;
+        case 'hot':
+          return `
+            background: #ff3e3e;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 62, 62, 0.5);
+            top: 45px;
+            right: 10px;
+          `;
+        case 'sale':
+          return `
+            background: #ff9100;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 145, 0, 0.5);
+            top: 45px;
+            right: 10px;
+          `;
+        default:
+          return '';
+      }
+    } else {
+      switch ($type) {
+        case 'active':
+          switch (theme.name) {
+            case 'cyberpunk':
+              return `
+                background: linear-gradient(90deg, #00ff9d, #00ffea);
+                color: #000;
+                box-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
+                border: 1px solid #00ff9d;
+                top: 10px;
+                right: 10px;
+                
+                svg {
+                  animation: pulse 2s infinite;
+                }
+              `;
+            case 'gaming':
+              return `
+                background: linear-gradient(90deg, #ff3e3e, #ff9100);
+                color: #fff;
+                padding: 6px 12px;
+                top: 10px;
+                right: 10px;
+                border-radius: 20px;
+                font-weight: bold;
+                overflow: hidden;
+                
+                &::before,
+                &::after {
+                  content: '';
+                  position: absolute;
+                  width: 8px;
+                  height: 8px;
+                  background: rgba(255, 255, 255, 0.8);
+                  border-radius: 50%;
+                  animation: float 3s infinite;
+                }
 
-              &::before {
-                left: 8px;
-                animation-delay: 0s;
-              }
+                &::before {
+                  left: 8px;
+                  animation-delay: 0s;
+                }
 
-              &::after {
-                left: 20px;
-                animation-delay: 1.5s;
-              }
+                &::after {
+                  left: 20px;
+                  animation-delay: 1.5s;
+                }
 
-              span {
-                position: relative;
-                z-index: 1;
-                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-              }
+                span {
+                  position: relative;
+                  z-index: 1;
+                  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                }
 
-              svg {
-                position: relative;
-                z-index: 1;
-                filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-              }
-            `;
-          case 'esports':
-            return `
-              background: #9933ff;
-              color: #fff;
-              box-shadow: 0 0 12px rgba(153, 51, 255, 0.5);
-              border: 2px solid #bf7fff;
-              top: 10px;
-              right: 10px;
-              
-              svg {
-                color: #00ff9d;
-              }
-            `;
-          case 'luxury':
-            return `
-              background: #ffd700;
-              color: #000;
-              box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-              border: 1px solid #ffed4a;
-              top: 10px;
-              right: 10px;
-              
-              svg {
-                color: #ff3e3e;
-              }
-            `;
-          case 'futuristic':
-            return `
-              background: rgba(0, 255, 255, 0.2);
-              color: #00ffff;
-              box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-              border: 1px solid #00ffff;
-              backdrop-filter: blur(5px);
-              top: 10px;
-              right: 10px;
-              
-              svg {
-                animation: rotate 2s linear infinite;
-              }
-            `;
-          default:
-            return `
-              background: #00ff9d;
-              color: #000;
-              box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
-              top: 10px;
-              right: 10px;
-            `;
-        }
-      case 'live':
-        return `
-          background: #00ff9d;
-          color: #000;
-          box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
-          top: 10px;
-          right: 10px;
-        `;
-      case 'inStock':
-        return `
-          background: ${theme.colors.primary};
-          color: ${theme.colors.text};
-          box-shadow: 0 0 10px ${theme.colors.primary}50;
-          top: 10px;
-          right: 10px;
-        `;
-      case 'hot':
-        return `
-          background: #ff3e3e;
-          color: #fff;
-          box-shadow: 0 0 10px rgba(255, 62, 62, 0.5);
-          top: 45px;
-          right: 10px;
-        `;
-      case 'sale':
-        return `
-          background: #ff9100;
-          color: #fff;
-          box-shadow: 0 0 10px rgba(255, 145, 0, 0.5);
-          top: 45px;
-          right: 10px;
-        `;
-      default:
-        return '';
+                svg {
+                  position: relative;
+                  z-index: 1;
+                  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+                }
+              `;
+            case 'esports':
+              return `
+                background: #9933ff;
+                color: #fff;
+                box-shadow: 0 0 12px rgba(153, 51, 255, 0.5);
+                border: 2px solid #bf7fff;
+                top: 10px;
+                right: 10px;
+                
+                svg {
+                  color: #00ff9d;
+                }
+              `;
+            case 'luxury':
+              return `
+                background: #ffd700;
+                color: #000;
+                box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+                border: 1px solid #ffed4a;
+                top: 10px;
+                right: 10px;
+                
+                svg {
+                  color: #ff3e3e;
+                }
+              `;
+            case 'futuristic':
+              return `
+                background: rgba(0, 255, 255, 0.2);
+                color: #00ffff;
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+                border: 1px solid #00ffff;
+                backdrop-filter: blur(5px);
+                top: 10px;
+                right: 10px;
+                
+                svg {
+                  animation: rotate 2s linear infinite;
+                }
+              `;
+            default:
+              return `
+                background: #00ff9d;
+                color: #000;
+                box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+                top: 10px;
+                right: 10px;
+              `;
+          }
+        case 'live':
+          return `
+            background: #00ff9d;
+            color: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+            top: 10px;
+            right: 10px;
+          `;
+        case 'inStock':
+          return `
+            background: ${theme.colors.primary};
+            color: ${theme.colors.text};
+            box-shadow: 0 0 10px ${theme.colors.primary}50;
+            top: 10px;
+            right: 10px;
+          `;
+        case 'hot':
+          return `
+            background: #ff3e3e;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 62, 62, 0.5);
+            top: 45px;
+            right: 10px;
+          `;
+        case 'sale':
+          return `
+            background: #ff9100;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 145, 0, 0.5);
+            top: 45px;
+            right: 10px;
+          `;
+        default:
+          return '';
+      }
     }
   }}
 
@@ -843,7 +968,8 @@ const themeNames: Record<ThemeNames, string> = {
   ultraGamingPro: 'Ultra Gaming Pro',
   cyberGamingPro: 'Cyber Gaming Pro',
   proGaming: 'Pro Gaming',
-  minimalist: 'Minimalist'
+  minimalist: 'Minimalist',
+  hybrid: 'Hybrid'
 };
 
 const themes: Record<ThemeNames, ThemeType> = {
@@ -856,7 +982,32 @@ const themes: Record<ThemeNames, ThemeType> = {
   ultraGamingPro: ultraGamingProTheme,
   cyberGamingPro: cyberGamingProTheme,
   proGaming: proGamingTheme,
-  minimalist: minimalistTheme
+  minimalist: minimalistTheme,
+  hybrid: {
+    name: 'hybrid',
+    colors: {
+      primary: '#00ff9d',
+      secondary: '#ff3e3e',
+      accent: '#9933ff',
+      background: '#0a0a0a',
+      surface: '#1a1a1a',
+      text: '#ffffff',
+      muted: '#888888',
+      gradient: 'linear-gradient(135deg, #00ff9d 0%, #9933ff 100%)',
+    },
+    fonts: {
+      primary: "'Rajdhani', sans-serif",
+      secondary: "'Orbitron', sans-serif",
+    },
+    borderRadius: '4px',
+    transitions: {
+      default: '0.3s ease',
+    },
+    shadows: {
+      card: '0 0 20px rgba(0, 255, 157, 0.2)',
+      button: '0 0 15px rgba(153, 51, 255, 0.3)',
+    },
+  },
 };
 
 function App() {
