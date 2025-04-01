@@ -10,54 +10,31 @@ export type ThemeNames =
   | 'ultraGamingPro'
   | 'cyberGamingPro'
   | 'proGaming'
-  | 'minimalist';
+  | 'minimalist'
+  | 'hybrid';
 
 export interface ThemeType {
   name: ThemeNames;
   colors: {
     primary: string;
     secondary: string;
+    accent: string;
     background: string;
     surface: string;
     text: string;
-    accent: string;
-    gradient: string;
-    success: string;
-    error: string;
-    warning: string;
-    info: string;
     muted: string;
+    gradient: string;
   };
   fonts: {
     primary: string;
     secondary: string;
   };
   borderRadius: string;
-  shadows: {
-    sharp: string;
-    neon: string;
-    default: string;
-    hover: string;
-    subtle: string;
-    medium: string;
-    strong: string;
-  };
-  spacing: {
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-  };
   transitions: {
     default: string;
-    fast: string;
-    slow: string;
   };
-  containers: {
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
+  shadows: {
+    card: string;
+    button: string;
   };
 } 
